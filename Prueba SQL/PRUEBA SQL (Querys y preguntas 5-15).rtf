@@ -1,0 +1,93 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang3082{\fonttbl{\f0\fnil Consolas;}{\f1\fnil\fcharset0 Consolas;}{\f2\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue0;\red0\green0\blue255;\red128\green128\blue128;\red255\green0\blue0;\red255\green0\blue255;}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\cf1\f0\fs19\lang10\par
+\cf2\b\par
+\cf0 5. SQL: Escriba un Script que selecciones 10 registros que en el campo Ciudad contenga la\f1\lang9226  \f0\lang10 Palabra Medellin (Tabla a consultar CRM_Terceros)\par
+\cf2\b0 SELECT\cf1  \cf2 TOP\cf1  10 \cf3 *\cf1  \cf2 FROM\cf1  CRM_TERCEROS \cf2 WHERE\cf1  Ciudad \cf3 =\cf1  \cf4 'Medellin'\cf3 ;\cf1\par
+\b 6. SQL: Escriba un Script que agrupe por ciudad los clientes facturador (FACTURADOR) y cuente\f1\lang9226  \f0\lang10 cu\f1\'e1ntos hay por ciudad\f0\par
+\cf2\b0 SELECT\cf1  CIUDAD\cf3 ,\cf1  \cf5 COUNT\cf3 (*)\cf1  \cf2 AS\cf1  CANTIDAD \cf2 FROM\cf1  CRM_TERCEROS \cf2 GROUP\cf1  \cf2 BY\cf1  CIUDAD\cf3 ;\cf1\par
+\b 7. SQL: Escriba un query que extraiga Campos NroFra, TipoFra, y me sume el campo Total,\f1\lang9226  \f0\lang10 solo aquellos registros en donde campo VENCE es < a la Fecha de Hoy (Tabla a Consultar\f1\lang9226  \f0\lang10 CRM_Cartera).\b0\par
+\cf2 SELECT\cf1   TIPOFRA\cf3 ,\cf1  \cf5 SUM\cf3 (\cf1 NROFRA\cf3 )\cf1  \cf2 AS\cf1  TOTAL \cf2 FROM\cf1  CRM_CARTERA \cf2 WHERE\cf1  VENCE \cf3 <\cf1  \cf5 GETDATE\cf3 ()\cf2 GROUP\cf1  \cf2 BY\cf1  TIPOFRA\cf3 ;\par
+\cf1\b 8. SQL: a la Tabla CRM_CARTERA traerle el nombre del Facturador que esta en la tabla\f1\lang9226  \f0\lang10 CRM_TERCEROS, y traer el TOP 100 de los registros\b0\par
+\cf2 SELECT\cf1  \cf2 TOP\cf1  100 CARTERA\cf3 .\cf1 FACTURADOR\cf3 ,\cf1  TERCEROS\cf3 .\cf1 NOMBRE \cf2 FROM\cf1  CRM_CARTERA \cf2 AS\cf1  CARTERA\par
+\cf3 JOIN\cf1  CRM_TERCEROS \cf2 AS\cf1  TERCEROS\par
+\cf2 ON\cf1  CARTERA\cf3 .\cf1 FACTURADOR \cf3 =\cf1  TERCEROS\cf3 .\cf1 FACTURADOR\cf3 ;\par
+\cf0\b 9. SQL: Calcule los d\f1\'edas disponibles entre VENCE y FechaConsigna, y muestre el resultado enun top (20)\f0\par
+\cf2\b0 SELECT\cf1  TIPOFRA\cf3 ,\cf1 FACTURADOR\cf3 ,\cf1 FECHACONSIGNA\cf3 ,\cf1 VENCE\cf3 ,\cf1  \cf5 DATEDIFF\cf3 (\cf5 day\cf1  \cf3 ,\cf1 FECHACONSIGNA\cf3 ,\cf1  VENCE\cf3 )\cf1  \cf2 AS\cf1  DiferenciaDias\f1\lang9226  \cf2\f0\lang10 FROM\cf1  CRM_CARTERA\cf3 ;\par
+\cf0\b 10. SQL: Que herramientas o funciones utiliza para identificar bloqueos o lentitud en SQL.\cf3\b0\par
+\cf0 En primer lugar, cuando trabajas directamente con SQL Server, SQL Server Management Studio (SSMS) es tu mejor amigo. Es una interfaz gr\f1\'e1fica que te permite administrar y consultar bases de datos. Dentro de SSMS, tienes el Monitor de actividad, que te da una vista en tiempo real de lo que est\'e1 sucediendo en el servidor. Puedes ver consultas activas, bloqueos, esperas y m\'e1s. Tambi\'e9n hay informes est\'e1ndar que te muestran m\'e9tricas importantes de rendimiento.Otra herramienta poderosa son las Dynamic Management Views (DMVs). Son vistas de sistema que te dan acceso a informaci\'f3n en tiempo real sobre el estado del servidor. Por ejemplo, sys.dm_exec_requests te muestra las consultas que est\'e1n en ejecuci\'f3n, sys.dm_exec_sessions muestra las sesiones activas y sys.dm_tran_locks te da detalles sobre bloqueos.\par
+Adem\'e1s, puedes configurar Eventos Extendidos para capturar eventos detallados sobre el rendimiento y el comportamiento de las consultas. Es una forma m\'e1s avanzada pero muy \'fatil para diagn\'f3sticos profundos.\par
+Para an\'e1lisis m\'e1s detallados y en profundidad, aunque se est\'e1 moviendo hacia su desuso, SQL Server Profiler sigue siendo \'fatil para capturar y analizar eventos espec\'edficos de rendimiento y bloqueos.\par
+Y, por supuesto, no olvides las consultas SQL directas. Con consultas como sp_who2 o sys.dm_exec_requests, puedes obtener informaci\'f3n detallada sobre qu\'e9 consultas est\'e1n ejecut\'e1ndose y si hay bloqueos.Finalmente, herramientas de terceros como Redgate SQL Monitor o Idera SQL Diagnostic Manager ofrecen funcionalidades avanzadas de monitoreo y optimizaci\'f3n.\par
+\par
+\b 11. MySQL: Explique con sus palabras que es el IBData de MySql y a qu\'e9 nivel se pueden manejar.\b0\par
+\b\'bfQu\'e9 es el IBData en MySQL?\par
+\b0 Cuando trabajamos con MySQL, especialmente si estamos usando el motor de almacenamiento InnoDB, nos encontramos con un archivo llamado **IBData**. Vamos a desglosarlo de una manera simple y clara.\par
+\b\'bfQu\'e9 es el IBData?\par
+\b0 El IBData es un archivo (o varios archivos) que InnoDB usa para almacenar datos importantes de nuestras bases de datos. Aqu\'ed est\'e1 lo que guarda:\par
+\par
+1. Datos de las Tablas: Aqu\'ed es donde realmente se guardan los datos que insertamos en nuestras tablas.\par
+2. \'cdndices: Para que las consultas sean r\'e1pidas, se crean \'edndices. Estos tambi\'e9n se almacenan en el IBData.\par
+3. Metadatos: Informaci\'f3n sobre la estructura de las tablas y otros detalles t\'e9cnicos.\par
+4. Espacio de Deshacer (Undo): Necesario para mantener la integridad de la base de datos y para soportar caracter\'edsticas como transacciones.\par
+\par
+\b\'bfPor qu\'e9 es importante?\b0\par
+\par
+El IBData es crucial porque contiene todos los datos y la estructura de tus tablas en InnoDB. Sin \'e9l, tu base de datos perder\'eda toda la informaci\'f3n almacenada.\par
+\b\'bfA qu\'e9 nivel se maneja?\par
+\b0 Podemos manejar el IBData a dos niveles:\par
+\par
+1. Nivel del Archivo \'danico: Todo se guarda en un solo archivo grande. Esto es m\'e1s sencillo de configurar y manejar, pero puede crecer mucho y ser dif\'edcil de gestionar en t\'e9rminos de espacio y rendimiento.\par
+   \par
+   - *Ventaja: F\'e1cil de configurar.\par
+   - Desventaja: Puede ser muy grande y dif\'edcil de manejar.\par
+\par
+2. Nivel de Archivos por Tabla: Cada tabla tiene su propio archivo de datos. Esto se conoce como **"file-per-table"** y es m\'e1s flexible.\par
+\par
+   - Ventaja: M\'e1s f\'e1cil de manejar en t\'e9rminos de tama\'f1o y mantenimiento.\par
+   - Desventaja: Puede requerir m\'e1s configuraci\'f3n y administraci\'f3n.\par
+\par
+\b\'bfC\'f3mo se maneja el IBData?\par
+\b0\par
+- Configuraci\'f3n Inicial: Durante la configuraci\'f3n de MySQL, decides si quieres usar un \'fanico archivo IBData o uno por tabla. Esto se define en el archivo de configuraci\'f3n de MySQL (my.cnf o my.ini) con la opci\'f3n `innodb_file_per_table`.\par
+\par
+- Mantenimiento Regular: Regularmente, deber\'edas monitorear el tama\'f1o y la integridad de tus archivos IBData para asegurar un buen rendimiento.\par
+\par
+- Respaldo y Recuperaci\'f3n: Es crucial incluir los archivos IBData en tus planes de respaldo. Sin ellos, no podr\'e1s restaurar tus bases de datos completamente.\par
+\par
+El IBData de MySQL es un archivo vital que almacena todos los datos y estructuras de las tablas de InnoDB. Puedes manejarlo como un \'fanico archivo grande o dividirlo en m\'faltiples archivos por tabla, dependiendo de tus necesidades y preferencias. Entender c\'f3mo funciona y c\'f3mo administrarlo es clave para mantener tus bases de datos en buen estado y funcionando eficientemente.\par
+\par
+\b 12. MySQL: Mencione dos motores de almacenamiento de MySQL\par
+\b0\f2\fs22 En MySQL, dos motores de almacenamiento comunes son InnoDB y MyISAM. \par
+\b InnoDB \b0 es bueno para aplicaciones que necesitan soporte completo para transacciones seguras y que manejen muchas operaciones de lectura y escritura al mismo tiempo. Es m\'e1s robusto en t\'e9rminos de integridad de datos y recuperaci\'f3n autom\'e1tica en caso de fallos.\par
+Por otro lado, \b MyISAM \b0 es m\'e1s r\'e1pido en lectura, pero carece de soporte completo para transacciones y no tiene la misma robustez que InnoDB en t\'e9rminos de integridad de datos y recuperaci\'f3n autom\'e1tica. Es m\'e1s simple de usar y es adecuado para aplicaciones donde la velocidad de lectura es m\'e1s cr\'edtica que la integridad absoluta de los datos.\par
+\par
+\b 13. \'bfQu\'e9 es una ETL?\par
+\b0 Una ETL (Extract, Transform, Load) es un proceso fundamental en la gesti\'f3n de datos que se utiliza para mover informaci\'f3n de una fuente de datos (Extract), transformarla seg\'fan las necesidades del negocio (Transform) y cargarla en un sistema de destino como un almac\'e9n de datos o una base de datos operativa (Load).\par
+\b - Extract (Extracci\'f3n): \b0 En esta fase, se recopilan datos de diversas fuentes como bases de datos, archivos planos, APIs o sistemas externos. Por ejemplo, extraer informaci\'f3n de registros de ventas de m\'faltiples tiendas.\par
+\b - Transform (Transformaci\'f3n): \b0 Aqu\'ed se aplican diversas operaciones para limpiar, estructurar y enriquecer los datos extra\'eddos. Por ejemplo, convertir formatos de fechas, calcular nuevas m\'e9tricas como el total de ventas por mes o normalizar nombres de productos.\par
+\b - Load (Carga): \b0 En esta etapa, los datos transformados se cargan en el sistema de destino final, como un almac\'e9n de datos o una base de datos operativa, listos para su an\'e1lisis o uso. Por ejemplo, cargar los datos limpios y enriquecidos en un almac\'e9n de datos para an\'e1lisis posteriores.\par
+Este proceso es esencial para asegurar que los datos sean consistentes, precisos y est\'e9n disponibles para su uso estrat\'e9gico dentro de una organizaci\'f3n, facilitando la toma de decisiones informadas y optimizando los recursos empresariales.\par
+\par
+\b 14. \'bfC\'f3mo agregar una nueva columna a una tabla existente en SQL?\par
+\b0 Agregar una nueva columna a una tabla existente en SQL es algo que se puede hacer f\'e1cilmente usando la sentencia `ALTER TABLE`. Aqu\'ed te explico c\'f3mo hacerlo con un ejemplo usando una tabla llamada `automovil`:\par
+\par
+Supongamos que la tabla `automovil` ya tiene las columnas `marca`, `modelo` y `a\'f1o`, y ahora queremos agregar una columna para indicar si es autom\'e1tico o mec\'e1nico.\par
+\par
+1. Definici\'f3n del cambio: Primero, especificamos qu\'e9 queremos cambiar en la tabla. En este caso, queremos agregar una nueva columna llamada `tipo_transmision`.\par
+\par
+2. Sintaxis SQL: Usamos la sentencia `ALTER TABLE` seguida del nombre de la tabla (`automovil`) y luego `ADD` para indicar que estamos a\'f1adiendo una nueva columna.\par
+\par
+3. Especificaci\'f3n de la nueva columna: Despu\'e9s del `ADD`, especificamos el nombre de la nueva columna (`tipo_transmision`) y su tipo de dato, que podr\'eda ser `VARCHAR`, `CHAR`, `BOOLEAN`, entre otros, dependiendo de c\'f3mo deseamos almacenar la informaci\'f3n.\par
+Aqu\'ed est\'e1 c\'f3mo se ver\'eda en SQL:\par
+\b ALTER TABLE automovil\par
+ADD tipo_transmision VARCHAR(10);\par
+\b0 Este comando a\'f1adir\'e1 una nueva columna llamada `tipo_transmision` a la tabla `automovil` con un tipo de dato `VARCHAR` que puede almacenar hasta 10 caracteres. Una vez ejecutado este comando, la tabla `automovil` tendr\'e1 una nueva columna disponible para almacenar informaci\'f3n sobre el tipo de transmisi\'f3n de cada autom\'f3vil, ya sea autom\'e1tico o mec\'e1nico.\par
+\b\par
+15. Describa que es para usted un ERP y cu\'e9ntanos si has tenido experiencia / contacto con alg\'fan ERP.\par
+\b0 Un ERP, o Sistema de Planificaci\'f3n de Recursos Empresariales, es como el cerebro de una empresa. Es un software integral dise\'f1ado para gestionar y automatizar pr\'e1cticamente todos los aspectos de un negocio, desde la contabilidad y finanzas hasta la gesti\'f3n de inventarios, recursos humanos, ventas y m\'e1s. Es como tener un centro de comando que ayuda a coordinar y optimizar todas las operaciones de una empresa en un solo lugar.\par
+\par
+Personalmente, no he tenido experiencia directa con un ERP en el trabajo, pero he considerado la posibilidad de estudiar sistemas como SAP u Oracle. Estos son algunos ejemplos populares de ERP que muchas grandes empresas utilizan para mejorar la eficiencia, la transparencia y la toma de decisiones basadas en datos. \b\par
+}
+ 
